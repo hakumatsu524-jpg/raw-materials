@@ -1,5 +1,7 @@
 # Raw Pad
 
+CA: FTjp8eK1DxpfVck6B7AUyCy1GDx26fhukbNAbs1Ypump
+
 Raw Pad is a dependency-free Node.js toolkit for building a **commodity-themed memecoin launchpad**. It creates launch-ready token metadata by pairing materials such as toilet paper + wood, paper + copper, or cotton + wheat.
 
 
