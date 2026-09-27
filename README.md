@@ -1,10 +1,18 @@
-# Raw Materials
+# Raw Pad
 
-Raw Materials is a small, dependency-free Node.js library and CLI for pairing real-world commodities into **memecoin concepts**. It turns inputs such as `toilet paper` + `wood` into deterministic metadata that can be used by a token launcher, community voting tool, or creative naming workflow.
+Raw Pad is a dependency-free Node.js toolkit for building a **commodity-themed memecoin launchpad**. It creates launch-ready token metadata by pairing materials such as toilet paper + wood, paper + copper, or cotton + wheat.
 
-> **Important:** Raw Materials only generates concept metadata. It does not create wallets, deploy smart contracts, sell tokens, handle funds, or provide financial advice. Review applicable laws and obtain professional advice before building anything that involves real money.
+![Raw Pad logo](./public/raw-materials-logo.png)
 
-![Raw Materials logo](./public/raw-materials-logo.png)
+> **Scope:** This repository provides launchpad metadata and validation primitives. It does not deploy contracts, custody funds, execute trades, or provide investment advice. Add chain-specific contracts, wallet flows, moderation, and compliance controls before handling real assets.
+
+## What it does
+
+- Maintains a searchable catalog of raw-material commodities.
+- Pairs two different commodities into a unique launch concept.
+- Generates a deterministic token name, ticker, categories, and description.
+- Provides a small library that can power a web or command-line launchpad.
+- Keeps blockchain execution out of the core so a chain adapter can be added deliberately.
 
 ## Requirements
 
@@ -13,23 +21,19 @@ Raw Materials is a small, dependency-free Node.js library and CLI for pairing re
 
 ## Install
 
-Clone the repository, then run:
-
 ```bash
 npm install
 ```
 
-The project also includes a Next.js preview scaffold, but the Raw Materials package itself runs directly in Node.js.
-
 ## CLI usage
 
-List supported commodities:
+List launchpad materials:
 
 ```bash
 node src/raw-materials.js list
 ```
 
-Create a pair:
+Generate a launch candidate:
 
 ```bash
 node src/raw-materials.js pair "toilet paper" wood
@@ -44,33 +48,39 @@ Example output:
   "ticker": "TPWOOD",
   "commodities": ["toilet-paper", "wood"],
   "categories": ["paper", "timber"],
-  "description": "A community-created memecoin concept pairing toilet paper with wood.",
-  "disclaimer": "Concept metadata only. This tool does not create, deploy, sell, or promote a financial asset."
+  "description": "A community-created launch candidate pairing toilet paper with wood.",
+  "launchStatus": "draft",
+  "disclaimer": "Launch metadata only. This tool does not deploy, sell, or promote a financial asset."
 }
 ```
 
 ## Use as a library
 
 ```js
-const { createPair } = require('./src/raw-materials')
+const { createLaunchCandidate } = require('./src/raw-materials')
 
-const pair = createPair('paper', 'copper', {
+const candidate = createLaunchCandidate('paper', 'copper', {
   name: 'Paper Hands Copper',
   ticker: 'PHCU',
+  description: 'A community launch candidate for paper and copper.'
 })
 
-console.log(pair)
+console.log(candidate)
 ```
 
 ## Development
 
-Run the built-in tests:
+Run tests:
 
 ```bash
 npm test
 ```
 
-Supported commodities currently include toilet paper, paper, wood, copper, steel, rubber, cotton, and wheat. Add new entries to the `commodities` array in `src/raw-materials.js` with an id, display name, symbol, category, and aliases.
+Supported materials currently include toilet paper, paper, wood, copper, steel, rubber, cotton, and wheat. Add entries to the `commodities` array in `src/raw-materials.js` to extend the catalog.
+
+## Building a chain adapter
+
+Keep `createLaunchCandidate` as the deterministic metadata layer, then implement a separate adapter for your target chain. That adapter should validate wallet ownership, token supply, fees, slippage, permissions, and transaction results server-side. Never place private keys or signing secrets in a client application.
 
 ## License
 
