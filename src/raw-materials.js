@@ -39,8 +39,9 @@ function createPair(firstInput, secondInput, options = {}) {
     ticker,
     commodities: [left.id, right.id],
     categories: [left.category, right.category],
-    description: options.description || `A community-created memecoin concept pairing ${left.name.toLowerCase()} with ${right.name.toLowerCase()}.`,
-    disclaimer: 'Concept metadata only. This tool does not create, deploy, sell, or promote a financial asset.',
+    description: options.description || `A community-created launch candidate pairing ${left.name.toLowerCase()} with ${right.name.toLowerCase()}.`,
+    launchStatus: 'draft',
+    disclaimer: 'Launch metadata only. This tool does not deploy, sell, or promote a financial asset.',
   }
 }
 
@@ -48,7 +49,9 @@ function listCommodities() {
   return commodities.map(({ id, name, symbol, category }) => ({ id, name, symbol, category }))
 }
 
-module.exports = { commodities, createPair, findCommodity, listCommodities }
+const createLaunchCandidate = createPair
+
+module.exports = { commodities, createPair, createLaunchCandidate, findCommodity, listCommodities }
 
 if (require.main === module) {
   const [, , command, first, second] = process.argv
